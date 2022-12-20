@@ -46,7 +46,7 @@ const startPlayers = async () => {
     let cards = [];
     const acc = await stdlib.newTestAccount(startingBalance);
     const ctc = acc.contract(backend, ctcDealer.getInfo());
-    pAcc.push([who, ctc]);
+    pAcc.push([who, ctc, acc]);
 
     const hand = {
       card1: drawCard(),
@@ -84,10 +84,14 @@ const startPlayers = async () => {
 };
 
 const checkWin = async () => {
-  for (const [who, ctc] of pAcc) {
+  for (const [who, ctc, acc] of pAcc) {
     try {
       const b = await ctc.apis.Player.checkWin();
       console.log(`Player ${who} outcome is ${outcomes[b]}`);
+      const pBal = await getBal(acc);
+      const dBal = await getBal(accDealer);
+      console.log(`Player balance is ${pBal}`);
+      console.log(`Dealer balance is ${dBal}`);
     } catch (e) {
       console.log(`${e}`);
     }
@@ -137,5 +141,7 @@ await Promise.all([
     },
   }),
 ]);
-
+const afterDealer = await getBal(accDealer);
+// const beforeDealer = await getBal(accDealer);
+console.log(`Dealer went from ${beforeDealer} to ${afterDealer}`);
 console.log("Casino is closing");

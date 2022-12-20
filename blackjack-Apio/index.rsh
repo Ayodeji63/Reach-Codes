@@ -123,7 +123,7 @@ export const main = Reach.App(() => {
   V.vBank.set(bank);
   const [count, wagers] = parallelReduce([0, 0])
     .invariant(balance() == wagers + bank)
-    .while(count < 5)
+    .while(count < 4)
     .api_(P.startGame, (card1, card2, wager) => {
       check(wager < 101000000, "sorry, that wager is over the limit");
       return [
@@ -249,7 +249,7 @@ export const main = Reach.App(() => {
       P.checkWin,
       () => {
         check(pSet.member(this), "Sorry, you didn't wager");
-        check(balance() > 1000, "balance too low");
+        // check(balance() > 10000, "balance too low");
         assume(myFromMaybe(wagerMap[this]) < 101, "assume wager too high");
       },
       () => 0,
