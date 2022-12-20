@@ -249,7 +249,7 @@ export const main = Reach.App(() => {
       P.checkWin,
       () => {
         check(pSet.member(this), "Sorry, you didn't wager");
-        // check(balance() > 10000, "balance too low");
+        check(balance() > 10000, "balance too low");
         assume(myFromMaybe(wagerMap[this]) < 101, "assume wager too high");
       },
       () => 0,
