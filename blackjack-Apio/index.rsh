@@ -243,13 +243,13 @@ export const main = Reach.App(() => {
   D.interact.showBalance(balance());
   D.interact.showTotalA(D, dTotal);
   const [fCount, nWagers] = parallelReduce([count, wagers])
-    .invariant(true)
+    .invariant(balance() > bank)
     .while(fCount > 0)
     .api(
       P.checkWin,
       () => {
         check(pSet.member(this), "Sorry, you didn't wager");
-        check(balance() > 10000, "balance too low");
+        check(balance() < 10000, "balance too low");
         assume(myFromMaybe(wagerMap[this]) < 101, "assume wager too high");
       },
       () => 0,
@@ -272,15 +272,15 @@ export const main = Reach.App(() => {
         delete wagerMap[this];
         if (win == P_WINS) {
           if (pObj.total == 21 && pObj.cardCount == 2) {
-            transfer(balance()).to(who);
+            // transfer(bet * 2).to(who);
             return [fCount - 1, nWagers - bet];
           } else {
-            transfer(balance()).to(who);
+            // transfer(bet * 2).to(who);
             return [fCount - 1, nWagers - bet];
           }
         } else {
           if (win == DRAW) {
-            transfer(balance()).to(who);
+            // transfer(bet * 2).to(who);
             return [fCount - 1, nWagers - bet];
           } else {
             return [fCount - 1, nWagers - bet];
