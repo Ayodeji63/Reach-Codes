@@ -15,7 +15,7 @@ let done = false;
 let pAcc = [];
 
 const randNum = () => {
-  const n = Math.floor(Math.random() * 2);
+  const n = Math.floor(Math.random() * 10);
   return n;
 };
 
@@ -31,9 +31,9 @@ const startPlayers = async () => {
     wager: ${stdlib.formatCurrency(pObj.amt)}
     number picked: ${pObj.pNum}`);
   };
+  await runPlayers("Sam");
   await runPlayers("Fave");
   await runPlayers("Zico");
-  await runPlayers("Sam");
 
   while (!done) {
     await stdlib.wait(1);

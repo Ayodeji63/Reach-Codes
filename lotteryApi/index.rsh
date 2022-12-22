@@ -104,14 +104,19 @@ export const main = Reach.App(() => {
 
   D.interact.seeWinner();
   const [count] = parallelReduce([howMany])
-    .invariant(balance() == wagers, "balance not accurate")
+    .invariant(true)
     .while(count > 0)
     .api_(H.checkWin, (player) => {
       check(isSome(players[player]), "not a player");
       return [
         0,
         (ret) => {
-          if (winNum === pNum[this]) {
+          const pObj = fromSome(players[player], {
+            addr: this,
+            amt: 0,
+            pNum: 0,
+          });
+          if (winNum === pObj.pNum) {
             transfer(balance()).to(player);
           }
           delete players[player];
